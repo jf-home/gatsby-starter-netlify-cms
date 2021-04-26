@@ -77,7 +77,9 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   fmImagesToRelative(node) // convert image paths for gatsby images
 
   if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
+    const filePath = createFilePath({ node, getNode })
+    const value = node.frontmatter.slug ? path.join(filePath, '..', node.frontmatter.slug) : filePath
+
     createNodeField({
       name: `slug`,
       node,
